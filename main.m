@@ -2,6 +2,21 @@
 % November 29, 2017
 % main.m
 % This script runs and plots the data analysis
+% 
+% Data Sources
+% ------------
+% iris data set:
+%     R.A. Fisher. “UCI Machine Learning Repository: Iris Data Set,” 1936.
+%     Irvine, CA: University of California, School of Information and
+%     Computer Science.
+% wine data set:
+%     Forina, M. et al. “UCI Machine Learning Repository: Wine Data Set,”
+%     1991. Irvine, CA: University of California, School of Information
+%     and Computer Science.
+% glass data set:
+%     B. German. “UCI Machine Learning Repository: Glass Identification
+%     Data Set,” 1987. Irvine, CA: University of California, School of
+%     Information and Computer Science.
 
 %%%%%%%%%%%%%
 % Import Data

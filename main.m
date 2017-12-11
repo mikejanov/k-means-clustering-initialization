@@ -68,11 +68,6 @@ glass_classified = [glass(:,1:glass_num_dimms) zeros(size(glass,1),1)];
 glass_classified = repmat(glass_classified, [1,1,num_diff_inits]);
 glass_mus = zeros(glass_num_k, glass_num_dimms, num_diff_inits);
 
-% zeros(size(gauss2,1), size(gauss2,2), num_diff_inits);
-% iris_classified = zeros(size(iris,1), size(iris,2), num_diff_inits);
-% wine_classified = zeros(size(wine,1), size(wine,2), num_diff_inits);
-% glass_classified = zeros(size(glass,1), size(glass,2), num_diff_inits);
-
 % Stores the algorithm execution data for random restarts. Each column
 %   is a different data set.
 time_randomized = zeros(num_random_restarts, num_diff_data_sets);
@@ -86,6 +81,27 @@ time_randomized = zeros(num_random_restarts, num_diff_data_sets);
     time_randomized(:,1)] = cluster_random_init(num_random_restarts,...
                                                 gauss2_num_k,...
                                                 gauss2(:,1:gauss2_num_dimms));
+                                            
+[iris_mus(:,:,1),...
+    ~,...
+    iris_classified(:,size(iris,2),1),...
+    time_randomized(:,2)] = cluster_random_init(num_random_restarts,...
+                                                iris_num_k,...
+                                                iris(:,1:iris_num_dimms));
+                                            
+[wine_mus(:,:,1),...
+    ~,...
+    wine_classified(:,size(wine,2),1),...
+    time_randomized(:,3)] = cluster_random_init(num_random_restarts,...
+                                                wine_num_k,...
+                                                wine(:,1:wine_num_dimms));
+                                            
+[glass_mus(:,:,1),...
+    ~,...
+    glass_classified(:,size(glass,2),1),...
+    time_randomized(:,4)] = cluster_random_init(num_random_restarts,...
+                                                glass_num_k,...
+                                                glass(:,1:glass_num_dimms));
                                             
 %%%%%%%%%%%
 % Plot Data
@@ -108,7 +124,6 @@ glass_y = 7;
 % Supervised
 %%%%%%%%%%%%
 
-%{
 dummy_mean = [0 0];
 
 figure;
@@ -132,7 +147,6 @@ subplot(2,2,4)
 plotClasses(glass, dummy_mean, glass_num_k, glass_x, glass_y, 0);
 add_plot_info('glass', glass_x, glass_y);
 title('\{Supervised\} Glass Identification Data')
-%}
 
 % Random Init
 %%%%%%%%%%%%%
@@ -142,7 +156,22 @@ figure;
 subplot(2,2,1)
 plotClasses(gauss2_classified(:,:,1), gauss2_mus(:,:,1), gauss2_num_k, gauss2_x, gauss2_y, 0);
 add_plot_info('gauss2', gauss2_x, gauss2_y);
-title('\{Test\} Gauss2')
+title('\{Init: Random\} 2-Class Multivariate Gaussian Data')
+
+subplot(2,2,2)
+plotClasses(iris_classified(:,:,1), iris_mus(:,:,1), iris_num_k, iris_x, iris_y, 0);
+add_plot_info('iris', iris_x, iris_y);
+title('\{Init: Random\} Iris Plants Data')
+
+subplot(2,2,3)
+plotClasses(wine_classified(:,:,1), wine_mus(:,:,1), wine_num_k, wine_x, wine_y, 0);
+add_plot_info('wine', wine_x, wine_y);
+title('\{Init: Random\} Wine Recognition Data')
+
+subplot(2,2,4)
+plotClasses(glass_classified(:,:,1), glass_mus(:,:,1), glass_num_k, glass_x, glass_y, 0);
+add_plot_info('glass', glass_x, glass_y);
+title('\{Init: Random\} Glass Identification Data')
 
 %{
 for ii = 1:9

@@ -7,7 +7,7 @@
 function [distance] = find_farthest_euclidean(data, mean)
     distance = 0;
     for row = 1:size(data, 1)
-        this_dist = find_euclidean_distance(mean, data(row, :));
+        this_dist = find_euclidean_distance(data(row, :), mean);
         if distance < this_dist
             distance = this_dist;
         end

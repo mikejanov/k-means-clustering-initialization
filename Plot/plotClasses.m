@@ -1,9 +1,12 @@
 % Michael Janov
 % November 30, 2017
+% Updated: December 11, 2017
+%
 % plotClasses.m
 % Plots color-coded data according to the number of classes in a given
 %   data set.
 % Asks which two attribute columns to plot with xVar and yVar.
+% Assumes data being sent in includes labels with the dataset.
 
 function plotClasses(data, means, kClasses, xVar, yVar, isEncircled)
     numCols = size(data,2);
@@ -27,9 +30,12 @@ function plotClasses(data, means, kClasses, xVar, yVar, isEncircled)
         hold on;
         
         % Encircle the data, if the argument is set
+        % TODO: Not really working in the spirit of the intent,
+        %       but working as designed. Need to re-evaluate how to draw
+        %       circle.
         if isEncircled == 1
             dist_outlier = find_farthest_euclidean([tempX tempY],...
-                                                   means(iiClass,:));
+                                                   means(iiClass,[xVar yVar]));
             plotCircle(dist_outlier, means(iiClass,:))
             hold on;
         end

@@ -140,7 +140,7 @@ title('\{Supervised\} Glass Identification Data')
 figure;
 
 subplot(2,2,1)
-plotClasses(gauss2_classified, gauss2_mus, gauss2_num_k, gauss2_x, gauss2_y, 1);
+plotClasses(gauss2_classified(:,:,1), gauss2_mus(:,:,1), gauss2_num_k, gauss2_x, gauss2_y, 0);
 add_plot_info('gauss2', gauss2_x, gauss2_y);
 title('\{Test\} Gauss2')
 

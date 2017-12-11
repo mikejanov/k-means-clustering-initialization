@@ -1,8 +1,9 @@
 % Michael Janov
 % November 1, 2017
+%
 % find_euclidean_distance.m
 % This function finds the euclidean distance between two n-dimensional
-% points.
+%   points.
 
 function [distance] = find_euclidean_distance(point_a, point_b)
     distance = 0;

@@ -3,7 +3,6 @@ function add_plot_info(name, var_x, var_y)
         legend('K1 \mu=[1,1] \Sigma=I',...
                'K2: \mu=[4,4] \Sigma=I',...
                'Location', 'northwest')
-        title('\{Supervised\} 2-Class Multivariate Gaussian Data')
         xlabel('X1')
         ylabel('X2')
     end
@@ -13,7 +12,6 @@ function add_plot_info(name, var_x, var_y)
                'Iris Versicolour',...
                'Iris Virginica',...
                'Location', 'northwest')
-        title('\{Supervised\} Iris Plants Data')
         
         switch var_x
             case 1
@@ -47,7 +45,6 @@ function add_plot_info(name, var_x, var_y)
                'Cultivar 2',...
                'Cultivar 3',...
                'Location', 'northeast')
-        title('\{Supervised\} Wine Recognition Data')
         
         switch var_x
             case 1
@@ -129,7 +126,6 @@ function add_plot_info(name, var_x, var_y)
                '6 tableware',...
                '7 headlamps',...
                'Location', 'northeast')
-        title('\{Supervised\} Glass Identification Data')
 
         switch var_x
             case 1

@@ -30,7 +30,7 @@ function [final_mus, labels, time] =...
          cluster_lakm_init(num_k_means, data)
      
     final_mus = zeros(num_k_means, size(data,2));
-    labels = zeros(size(data,1));
+    labels = zeros(size(data,1),1);
     
     % Representatives are initial guesses at the mus based on linearizing
     % Stores only the index that the datum is found at
@@ -64,7 +64,17 @@ function [final_mus, labels, time] =...
         
         ii_rep = ii_rep + 1;
     end
-    final_mus
+    
+    % Now assign each datum to nearest rep's mu
+    for ii = 1:size(data,1)
+        labels(ii) = find_closest_rep(data(ii,:),final_mus,num_k_means);
+    end
+    
+    
+    
+    
+    
+    
 %         all_mus(:,:,ii) = randomize_means(num_k_means, data);
 %         all_labels(:,ii) = classify_data(data, all_mus(:,:,ii));
 %         scores(ii) = get_sum_squared_error(data, ...

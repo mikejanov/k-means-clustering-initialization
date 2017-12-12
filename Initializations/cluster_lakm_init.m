@@ -70,8 +70,9 @@ function [final_mus, labels, time] =...
         labels(ii) = find_closest_rep(data(ii,:),final_mus,num_k_means);
     end
     
-    
-    
+    % Next, find Cluster Means Matrix. Calculate each cluster's true mean
+    % independent of provided data points.
+    final_mus = find_mean_matrix(data, labels, num_k_means, final_mus)
     
     
     

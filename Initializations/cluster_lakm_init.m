@@ -21,12 +21,11 @@
 %   <--[labels] Assigned class (from 1 to k) of each data point.
 %               (data_num_row x 1) matrix.
 %   <--[time] Execution systime of each iteration. (1 x num_restarts)
-%             smatrix.
-%
+%   <--[iterations] Number of 'true means' iterations until convergence.
 %   -->[num_k_means] The number of mus that are in the data set.
 %   -->[data] (row x d) data set to classify.
 
-function [final_mus, labels, time] =...
+function [final_mus, labels, time, iterations] =...
          cluster_lakm_init(num_k_means, data)
      
     final_mus = zeros(num_k_means, size(data,2));
@@ -70,21 +69,23 @@ function [final_mus, labels, time] =...
         labels(ii) = find_closest_rep(data(ii,:),final_mus,num_k_means);
     end
     
-    % Next, find Cluster Means Matrix. Calculate each cluster's true mean
-    % independent of provided data points.
-    final_mus = find_mean_matrix(data, labels, num_k_means, final_mus)
-    
-    
-    
-%         all_mus(:,:,ii) = randomize_means(num_k_means, data);
-%         all_labels(:,ii) = classify_data(data, all_mus(:,:,ii));
-%         scores(ii) = get_sum_squared_error(data, ...
-%                                            all_labels(:,ii), ...
-%                                            all_mus(:,:,ii));
+    % For this block, iterate until there is no change in labels (that is
+    % to say, there is convergence).
+    last_labels = zeros(size(labels,1),1);
+    iterations = 0;
+    while (~min(last_labels==labels))
+        last_labels = labels; % Reset last_label storage
+        
+        % Find Cluster Means Matrix. Calculate each cluster's true mean
+        % independent of provided data points.
+        final_mus = find_mean_matrix(data, labels, num_k_means, final_mus);
+
+        % Reassign points according to new means
+        for ii = 1:size(data,1)
+            labels(ii) = find_closest_rep(data(ii,:),final_mus,num_k_means);
+        end
+        iterations = iterations + 1;
+    end
     
     time = toc; % Finish stopwatch timer
-    
-%     [~,best_fit_iteration] = min(scores);
-%     final_mus = all_mus(:,:,best_fit_iteration);
-%     labels = all_labels(:,best_fit_iteration);
 end

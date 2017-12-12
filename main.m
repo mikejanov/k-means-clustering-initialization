@@ -1,5 +1,7 @@
 % Michael Janov
 % November 29, 2017
+% Last Update: December 12, 2017
+%
 % main.m
 % This script runs and plots the data analysis
 % 
@@ -72,11 +74,11 @@ glass_mus = zeros(glass_num_k, glass_num_dimms, num_diff_inits);
 %   is a different data set.
 time_randomized = zeros(num_random_restarts, num_diff_data_sets);
 time_lakm = zeros(num_diff_data_sets,1);
+num_iterations_lakm = zeros(num_diff_data_sets,1);
 
 % Random Init
 %%%%%%%%%%%%%
 
-%{
 [gauss2_mus(:,:,1),...
     ~,...
     gauss2_classified(:,size(gauss2,2),1),...
@@ -103,35 +105,38 @@ time_lakm = zeros(num_diff_data_sets,1);
     glass_classified(:,size(glass,2),1),...
     time_randomized(:,4)] = cluster_random_init(num_random_restarts,...
                                                 glass_num_k,...
-                                                glass(:,1:glass_num_dimms));
-%}                                            
+                                                glass(:,1:glass_num_dimms));                                      
 
 % Linear Assignment (LAKM) Init
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 [gauss2_mus(:,:,2),...
     gauss2_classified(:,size(gauss2,2),2),...
-    time_lakm(1)] = cluster_lakm_init(gauss2_num_k,...
-                                     gauss2(:,1:gauss2_num_dimms));
+    time_lakm(1),...
+    num_iterations_lakm(1)] =...
+cluster_lakm_init(gauss2_num_k,...
+                  gauss2(:,1:gauss2_num_dimms));
 
-%{
 [iris_mus(:,:,2),...
     iris_classified(:,size(iris,2),2),...
-    time_lakm(2)] = cluster_lakm_init(iris_num_k,...
-                                     iris(:,1:iris_num_dimms));
-%}
+    time_lakm(2),...
+    num_iterations_lakm(2)] =...
+cluster_lakm_init(iris_num_k,...
+                  iris(:,1:iris_num_dimms));
 
-%{
 [wine_mus(:,:,2),...
     wine_classified(:,size(wine,2),2),...
-    time_lakm(3)] = cluster_lakm_init(wine_num_k,...
-                                     wine(:,1:wine_num_dimms));  
+    time_lakm(3),...
+    num_iterations_lakm(3)] =...
+ cluster_lakm_init(wine_num_k,...
+                   wine(:,1:wine_num_dimms));  
                               
 [glass_mus(:,:,2),...
     glass_classified(:,size(glass,2),2),...
-    time_lakm(4)] = cluster_lakm_init(glass_num_k,...
-                                     glass(:,1:glass_num_dimms));
-%}
+    time_lakm(4),...
+    num_iterations_lakm(4)] =...
+cluster_lakm_init(glass_num_k,...
+                  glass(:,1:glass_num_dimms));
                                      
 %%%%%%%%%%%
 % Plot Data
@@ -154,7 +159,6 @@ glass_y = 7;
 % Supervised
 %%%%%%%%%%%%
 
-%{
 dummy_mean = [0 0];
 
 figure;
@@ -178,12 +182,10 @@ subplot(2,2,4)
 plotClasses(glass, dummy_mean, glass_num_k, glass_x, glass_y, 0);
 add_plot_info('glass', glass_x, glass_y);
 title('\{Supervised\} Glass Identification Data')
-%}
 
 % Random Init
 %%%%%%%%%%%%%
 
-%{
 figure;
 
 subplot(2,2,1)
@@ -205,12 +207,10 @@ subplot(2,2,4)
 plotClasses(glass_classified(:,:,1), glass_mus(:,:,1), glass_num_k, glass_x, glass_y, 0);
 add_plot_info('glass', glass_x, glass_y);
 title('\{Init: Random\} Glass Identification Data')
-%}
 
 % Linear Assignment Init
 %%%%%%%%%%%%%%%%%%%%%%%%
 
-%{
 figure;
 
 subplot(2,2,1)
@@ -232,7 +232,6 @@ subplot(2,2,4)
 plotClasses(glass_classified(:,:,2), glass_mus(:,:,2), glass_num_k, glass_x, glass_y, 0);
 add_plot_info('glass', glass_x, glass_y);
 title('\{Init: Linear Assignment\} Glass Identification Data')
-%}
 
 % DEBUG Looking at each possible glass graph
 %{

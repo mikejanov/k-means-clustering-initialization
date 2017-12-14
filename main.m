@@ -1,6 +1,6 @@
 % Michael Janov
 % November 29, 2017
-% Last Update: December 12, 2017
+% Last Update: December 13, 2017
 %
 % main.m
 % This script runs and plots the data analysis
@@ -85,7 +85,13 @@ num_iterations_lakm = zeros(num_diff_data_sets,1);
     time_randomized(:,1)] = cluster_random_init(num_random_restarts,...
                                                 gauss2_num_k,...
                                                 gauss2(:,1:gauss2_num_dimms));
-                                            
+gauss2_classified(:,size(gauss2,2),1) =...
+    normalize_labels(gauss2(:,size(gauss2,2)),...
+        gauss2_classified(:,size(gauss2,2),1),...
+        gauss2_num_k);
+                
+%%%
+    
 [iris_mus(:,:,1),...
     ~,...
     iris_classified(:,size(iris,2),1),...
@@ -93,6 +99,13 @@ num_iterations_lakm = zeros(num_diff_data_sets,1);
                                                 iris_num_k,...
                                                 iris(:,1:iris_num_dimms));
                                             
+iris_classified(:,size(iris,2),1) =...
+    normalize_labels(iris(:,size(iris,2)),...
+        iris_classified(:,size(iris,2),1),...
+        iris_num_k);
+                    
+%%%
+    
 [wine_mus(:,:,1),...
     ~,...
     wine_classified(:,size(wine,2),1),...
@@ -100,13 +113,25 @@ num_iterations_lakm = zeros(num_diff_data_sets,1);
                                                 wine_num_k,...
                                                 wine(:,1:wine_num_dimms));
                                             
+wine_classified(:,size(wine,2),1) =...
+    normalize_labels(wine(:,size(wine,2)),...
+        wine_classified(:,size(wine,2),1),...
+        wine_num_k);
+                    
+%%%
+                                            
 [glass_mus(:,:,1),...
     ~,...
     glass_classified(:,size(glass,2),1),...
     time_randomized(:,4)] = cluster_random_init(num_random_restarts,...
                                                 glass_num_k,...
                                                 glass(:,1:glass_num_dimms));                                      
-
+                                            
+glass_classified(:,size(glass,2),1) =...
+    normalize_labels(glass(:,size(glass,2)),...
+        glass_classified(:,size(glass,2),1),...
+        glass_num_k);
+                                            
 % Linear Assignment (LAKM) Init
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -117,6 +142,13 @@ num_iterations_lakm = zeros(num_diff_data_sets,1);
 cluster_lakm_init(gauss2_num_k,...
                   gauss2(:,1:gauss2_num_dimms));
 
+gauss2_classified(:,size(gauss2,2),2) =...
+    normalize_labels(gauss2(:,size(gauss2,2)),...
+        gauss2_classified(:,size(gauss2,2),2),...
+        gauss2_num_k);
+            
+%%%
+    
 [iris_mus(:,:,2),...
     iris_classified(:,size(iris,2),2),...
     time_lakm(2),...
@@ -124,20 +156,39 @@ cluster_lakm_init(gauss2_num_k,...
 cluster_lakm_init(iris_num_k,...
                   iris(:,1:iris_num_dimms));
 
+iris_classified(:,size(iris,2),2) =...
+    normalize_labels(iris(:,size(iris,2)),...
+        iris_classified(:,size(iris,2),2),...
+        iris_num_k);
+
+%%%
+    
 [wine_mus(:,:,2),...
     wine_classified(:,size(wine,2),2),...
     time_lakm(3),...
     num_iterations_lakm(3)] =...
  cluster_lakm_init(wine_num_k,...
                    wine(:,1:wine_num_dimms));  
-                              
+
+wine_classified(:,size(wine,2),2) =...
+    normalize_labels(wine(:,size(wine,2)),...
+        wine_classified(:,size(wine,2),2),...
+        wine_num_k);               
+           
+%%%
+    
 [glass_mus(:,:,2),...
     glass_classified(:,size(glass,2),2),...
     time_lakm(4),...
     num_iterations_lakm(4)] =...
 cluster_lakm_init(glass_num_k,...
                   glass(:,1:glass_num_dimms));
-                                     
+                
+glass_classified(:,size(glass,2),2) =...
+    normalize_labels(glass(:,size(glass,2)),...
+        glass_classified(:,size(glass,2),2),...
+        glass_num_k);              
+              
 %%%%%%%%%%%
 % Plot Data
 %%%%%%%%%%%
@@ -186,27 +237,27 @@ title('\{Supervised\} Glass Identification Data')
 % Random Init
 %%%%%%%%%%%%%
 
-figure;
-
-subplot(2,2,1)
-plotClasses(gauss2_classified(:,:,1), gauss2_mus(:,:,1), gauss2_num_k, gauss2_x, gauss2_y, 0);
-add_plot_info('gauss2', gauss2_x, gauss2_y);
-title('\{Init: Random\} 2-Class Multivariate Gaussian Data')
-
-subplot(2,2,2)
-plotClasses(iris_classified(:,:,1), iris_mus(:,:,1), iris_num_k, iris_x, iris_y, 0);
-add_plot_info('iris', iris_x, iris_y);
-title('\{Init: Random\} Iris Plants Data')
-
-subplot(2,2,3)
-plotClasses(wine_classified(:,:,1), wine_mus(:,:,1), wine_num_k, wine_x, wine_y, 0);
-add_plot_info('wine', wine_x, wine_y);
-title('\{Init: Random\} Wine Recognition Data')
-
-subplot(2,2,4)
-plotClasses(glass_classified(:,:,1), glass_mus(:,:,1), glass_num_k, glass_x, glass_y, 0);
-add_plot_info('glass', glass_x, glass_y);
-title('\{Init: Random\} Glass Identification Data')
+% figure;
+% 
+% subplot(2,2,1)
+% plotClasses(gauss2_classified(:,:,1), gauss2_mus(:,:,1), gauss2_num_k, gauss2_x, gauss2_y, 0);
+% add_plot_info('gauss2', gauss2_x, gauss2_y);
+% title('\{Init: Random\} 2-Class Multivariate Gaussian Data')
+% 
+% subplot(2,2,2)
+% plotClasses(iris_classified(:,:,1), iris_mus(:,:,1), iris_num_k, iris_x, iris_y, 0);
+% add_plot_info('iris', iris_x, iris_y);
+% title('\{Init: Random\} Iris Plants Data')
+% 
+% subplot(2,2,3)
+% plotClasses(wine_classified(:,:,1), wine_mus(:,:,1), wine_num_k, wine_x, wine_y, 0);
+% add_plot_info('wine', wine_x, wine_y);
+% title('\{Init: Random\} Wine Recognition Data')
+% 
+% subplot(2,2,4)
+% plotClasses(glass_classified(:,:,1), glass_mus(:,:,1), glass_num_k, glass_x, glass_y, 0);
+% add_plot_info('glass', glass_x, glass_y);
+% title('\{Init: Random\} Glass Identification Data')
 
 % Linear Assignment Init
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -232,6 +283,31 @@ subplot(2,2,4)
 plotClasses(glass_classified(:,:,2), glass_mus(:,:,2), glass_num_k, glass_x, glass_y, 0);
 add_plot_info('glass', glass_x, glass_y);
 title('\{Init: Linear Assignment\} Glass Identification Data')
+
+%%%%%%%%%%%%%%
+% Analyze Data
+%%%%%%%%%%%%%%
+
+% Accuracy
+%%%%%%%%%%
+
+accuracy = zeros(num_diff_inits, num_diff_data_sets);
+
+for ii_init = 2:2 %num_diff_inits
+    accuracy(ii_init, 1) = get_accuracy(gauss2(:,size(gauss2,2)),...
+                              gauss2_classified(:,size(gauss2_classified,2),ii_init));
+
+    accuracy(ii_init, 2) = get_accuracy(iris(:,size(iris,2)),...
+                              iris_classified(:,size(iris_classified,2),ii_init));
+
+    accuracy(ii_init, 3) = get_accuracy(wine(:,size(wine,2)),...
+                              wine_classified(:,size(wine_classified,2),ii_init));
+
+    accuracy(ii_init, 4) = get_accuracy(glass(:,size(glass,2)),...
+                              glass_classified(:,size(glass_classified,2),ii_init));
+end
+
+accuracy(2,:)
 
 % DEBUG Looking at each possible glass graph
 %{

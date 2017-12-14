@@ -13,6 +13,15 @@
 %       Control, and Intelligent Systems (CYBER), Shenyang, 2015,
 %       pp. 790-794.
 %
+% Note: This is not a fully-faithful remaking of Q. Yuan, et al's,
+%   algorithm. There were some difficulties understanding Minimum Density
+%   Distance (MDD) in the paper and some conflicting statements that led me
+%   to leave this portion out. Instead, filtering was done by local-radius
+%   filtering rather than by the proposed MDD. Radius size is a critical
+%   portion of this algorithm that was not well-addressed in the paper and
+%   I currently have a hard-coded value for local radius size that works
+%   sufficiently well for my data sets.
+%
 %   Variables and Notation:
 %       d = number of dimentions
 %       k = number of clusters
@@ -42,13 +51,8 @@ function [final_mus, labels, time, iterations] =...
         end
     end
     
-    % Determine points (as their row-col matrix) that are farthest from
-    % each other. This provides the 'global radius'. Then find the local
-    % radius based on the number of k-means.
-%     temp_distances = distances;
-%     temp_distances(:); % Make into single column. Ignore error.
-%     [global_radius,~] = max(temp_distances(:)); % Find distance
-%     local_radius = global_radius / num_k_means; 
+    % Determine local radius
+    % TODO: Determine a better radius sizing metric
     local_radius = 0.75;
     
     % Create new matrix that filters out distance values that lie outside

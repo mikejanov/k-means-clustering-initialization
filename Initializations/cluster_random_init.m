@@ -1,6 +1,6 @@
 % Michael Janov
 % November 1, 2017
-% Updated: December 10, 2017
+% Updated: December 13, 2017
 %
 % cluster_random_init.m
 % This function handles integration of all k-means clustering functions.

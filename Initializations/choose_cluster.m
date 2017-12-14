@@ -1,6 +1,6 @@
 % Michael Janov
 % November 1, 2017
-% Updated: December 10, 2017
+% Updated: December 13, 2017
 %
 % choose_cluster.m
 % Given a new data point and the list of means, returns the cluster that
@@ -26,6 +26,5 @@ function [class] = choose_cluster(mus, data_point)
     
     % Return index (and corresponding class) of the cluster that's
     %   closest. Classes are 1-indexed.
-    [~,index] = min(distances);
-    class = index;
+    [~,class] = min(distances);
 end

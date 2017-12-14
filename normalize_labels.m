@@ -30,6 +30,7 @@ function [normalized_labels] = normalize_labels(observed_labels,...
             scored_labels(observed_labels(row), classified_labels(row)) + 1;
     end
     
+    %scored_labels
     % Swap labels according to frequency matrix
     for ii_class = 1:num_k_means
         % Find which class it should have been named
